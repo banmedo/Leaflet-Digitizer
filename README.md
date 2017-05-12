@@ -22,8 +22,7 @@ A digitizer for data surveys for digitizing polygons according to surveys upload
 
 ##Libraries used
 1. Leaflet
-2. jQuery
-3. Leaflet.Draw
-4. tokml.js
-5. togeojson.js
-6. filesaver.js
+2. Leaflet.Draw
+3. tokml.js
+4. togeojson.js
+5. filesaver.js
