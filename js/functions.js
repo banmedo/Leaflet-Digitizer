@@ -9,7 +9,27 @@ function matchLayers(layers){
 	});
 	
 }
-
+function updateBounds(feature){
+	var lls = feature._latlngs[0];
+	var maxlat = 0, minlat = 0, maxlng = 0, minlng = 0;
+	for (keys in feature._latlngs[0]){
+		var la = lls[keys]["lat"];
+		var ln = lls[keys]["lng"];
+		if (maxlat == 0) maxlat = la;
+		if (minlat == 0) minlat = la;
+		if (maxlng == 0) maxlng = ln;
+		if (minlng == 0) minlng = ln;
+		
+		if (la > maxlat) maxlat = la;
+		if (la < minlat) minlat = la;
+		if (ln > maxlng) maxlng = ln;
+		if (ln < minlng) minlng = ln;
+	}
+	feature._bounds._northEast.lat = maxlat;
+	feature._bounds._northEast.lng = maxlng;
+	feature._bounds._southWest.lat = minlat;
+	feature._bounds._southWest.lng = minlng;
+}
 
 // function to create match lines if there are at least one feature for both layers
 function getMatchLine(layerIndex){
@@ -51,9 +71,10 @@ function featuresEdited(event){
 	var layers = event.layers || event.target || event;
 	layers.eachLayer(function(layer){
 		var name = layer.feature.properties.name;
-		var line = getMatchLine(name);
 		lineLayer.removeLayer(lineIndex[name]);
+		updateBounds(layer);
 		delete(lineIndex[name]);
+		var line = getMatchLine(name);
 		lineLayer.addLayer(line);
 		lineIndex[name] = line;
 	});
