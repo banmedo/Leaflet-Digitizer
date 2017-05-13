@@ -34,6 +34,7 @@ L.Control.FeatureFetch = L.Control.extend({
 		
 		var inp = L.DomUtil.create('input');
 		inp.type = 'file';
+		inp.title = 'select a kml or a csv file';
 		inp.accept = '.csv,.kml';
 		inp.style.opacity = 0;
 		inp.style.height = '30px';
